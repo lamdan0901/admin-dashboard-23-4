@@ -125,7 +125,9 @@ export const Sidebar = ({
   const { pathname } = useLocation()
   const navigate = useNavigate()
   const theme = useTheme()
-  const [active, setActive] = useState(pathname)
+  const [activeRoute, setActiveRoute] = useState('')
+
+  useEffect(() => setActiveRoute(pathname), [pathname])
 
   return (
     <Box component="nav">
@@ -178,16 +180,16 @@ export const Sidebar = ({
                     <ListItemButton
                       onClick={() => {
                         navigate(path)
-                        setActive(path)
+                        setActiveRoute(path)
                       }}
                       sx={{
                         backgroundColor:
-                          active === path
+                          activeRoute === path
                             ? // @ts-ignore
                               theme.palette.secondary[300]
                             : 'transparent',
                         color:
-                          active === path
+                          activeRoute === path
                             ? // @ts-ignore
                               theme.palette.primary[600]
                             : // @ts-ignore
@@ -198,7 +200,7 @@ export const Sidebar = ({
                         sx={{
                           ml: '2rem',
                           color:
-                            active === path
+                            activeRoute === path
                               ? // @ts-ignore
                                 theme.palette.primary[600]
                               : // @ts-ignore
@@ -208,7 +210,7 @@ export const Sidebar = ({
                         {icon}
                       </ListItemIcon>
                       <ListItemText primary={text} />
-                      {active === path && (
+                      {activeRoute === path && (
                         <ChevronRightOutlined sx={{ ml: 'auto' }} />
                       )}
                     </ListItemButton>
